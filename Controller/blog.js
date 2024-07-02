@@ -6,6 +6,7 @@ exports.blogcreate = async function (req, res, next) {
     try {
         let formdata = req.body
         req.body.image = req.file.filename
+
         let blogCreate = await BLOG.create(formdata)
 
         res.status(201).json({
@@ -24,12 +25,30 @@ exports.blogcreate = async function (req, res, next) {
 // blog find
 exports.blogfind = async function (req, res, next) {
     try {
-        let formdata = req.body
-        let blogfind = await BLOG.find(formdata)
+        
+        let blogfind = await BLOG.find()
 
         res.status(201).json({
             status: "Success",
             message: "Blog all data Successfully",
+            data: blogfind,
+        })
+    } catch (error) {
+        res.status(404).json({
+            status: "Fail",
+            message: error.message
+        })
+    }
+}
+
+exports.blogSearch = async function (req, res, next) {
+    try {
+        
+        let blogfind = await BLOG.find({title : {$regex : req.query.s,$options : "i"}})
+
+        res.status(201).json({
+            status: "Success",
+            message: "Blog search data Successfully",
             data: blogfind,
         })
     } catch (error) {

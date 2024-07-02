@@ -26,6 +26,8 @@ router.post('/create', userController.sequre , upload.single('image') , blogCont
 
 router.get('/find/', blogController.blogfind );
 
+router.get('/search', blogController.blogSearch );
+
 router.get('/findone/:findId', blogController.blogfindone );
 
 router.delete('/delete/:deleteId', blogController.blogdelete );
